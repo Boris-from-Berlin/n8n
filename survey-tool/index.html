@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chromatic Archetypes - Persönlichkeitstest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .intro-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .start-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .start-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .survey-section {
+            display: none;
+        }
+
+        .survey-section.active {
+            display: block;
+        }
+
+        .question-group {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .question-group:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .rating-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .rating-label-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .rating-options {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .rating-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .rating-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .rating-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 50px;
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .rating-option input[type="radio"]:checked + label {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-option label:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .contact-section {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .contact-section h3 {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: #ef4444;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-button:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-light);
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+
+        .success-message h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .rating-options {
+                gap: 5px;
+            }
+
+            .rating-option label {
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CHROMATIC ARCHETYPES</h1>
+            <p>Dein kostenloser Persönlichkeitstest</p>
+        </div>
+
+        <div class="content">
+            <!-- Intro Section -->
+            <div class="intro-section" id="introSection">
+                <h2>Willkommen!</h2>
+                <p>
+                    Entdecke deine Persönlichkeit in nur 16 Fragen. Dieser Test hilft dir,
+                    deine Stärken und Eigenschaften besser zu verstehen. Beantworte die Fragen
+                    ehrlich und intuitiv – es gibt keine richtigen oder falschen Antworten.
+                </p>
+                <button class="start-button" onclick="startSurvey()">
+                    Test starten
+                </button>
+            </div>
+
+            <!-- Survey Section -->
+            <div class="survey-section" id="surveySection">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <form id="surveyForm">
+                    <!-- Kapitel 1: Handeln & Verantwortung übernehmen -->
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 1: Ich fühle mich kraftvoll, wenn ich Herausforderungen aktiv anpacke
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q1" id="q1_1" value="1" required>
+                                <label for="q1_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q1" id="q1_2" value="2">
+                                <label for="q1_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q1" id="q1_3" value="3">
+                                <label for="q1_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q1" id="q1_4" value="4">
+                                <label for="q1_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q1" id="q1_5" value="5">
+                                <label for="q1_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 2: Ich setze mich mutig für meine Ziele ein, auch wenn Hindernisse auftreten
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q2" id="q2_1" value="1" required>
+                                <label for="q2_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q2" id="q2_2" value="2">
+                                <label for="q2_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q2" id="q2_3" value="3">
+                                <label for="q2_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q2" id="q2_4" value="4">
+                                <label for="q2_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q2" id="q2_5" value="5">
+                                <label for="q2_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 3: Ich stehe gerne für andere ein und übernehme Verantwortung
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q3" id="q3_1" value="1" required>
+                                <label for="q3_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q3" id="q3_2" value="2">
+                                <label for="q3_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q3" id="q3_3" value="3">
+                                <label for="q3_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q3" id="q3_4" value="4">
+                                <label for="q3_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q3" id="q3_5" value="5">
+                                <label for="q3_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 4: Es fällt mir leicht, Entscheidungen zu treffen und zu handeln
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q4" id="q4_1" value="1" required>
+                                <label for="q4_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q4" id="q4_2" value="2">
+                                <label for="q4_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q4" id="q4_3" value="3">
+                                <label for="q4_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q4" id="q4_4" value="4">
+                                <label for="q4_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q4" id="q4_5" value="5">
+                                <label for="q4_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kapitel 2: Kreativität & Schöpfung -->
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 5: Ich habe viele kreative Ideen, die ich in die Welt bringen möchte
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q5" id="q5_1" value="1" required>
+                                <label for="q5_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q5" id="q5_2" value="2">
+                                <label for="q5_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q5" id="q5_3" value="3">
+                                <label for="q5_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q5" id="q5_4" value="4">
+                                <label for="q5_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q5" id="q5_5" value="5">
+                                <label for="q5_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 6: Ich erfinde gern neue Lösungen und denke in Visionen der Zukunft
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q6" id="q6_1" value="1" required>
+                                <label for="q6_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q6" id="q6_2" value="2">
+                                <label for="q6_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q6" id="q6_3" value="3">
+                                <label for="q6_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q6" id="q6_4" value="4">
+                                <label for="q6_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q6" id="q6_5" value="5">
+                                <label for="q6_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 7: Ich bin begeistert, wenn ich etwas Schönes oder Originelles erschaffen kann
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q7" id="q7_1" value="1" required>
+                                <label for="q7_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q7" id="q7_2" value="2">
+                                <label for="q7_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q7" id="q7_3" value="3">
+                                <label for="q7_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q7" id="q7_4" value="4">
+                                <label for="q7_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q7" id="q7_5" value="5">
+                                <label for="q7_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 8: Ich bringe Leichtigkeit und Freude in meine Projekte
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q8" id="q8_1" value="1" required>
+                                <label for="q8_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q8" id="q8_2" value="2">
+                                <label for="q8_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q8" id="q8_3" value="3">
+                                <label for="q8_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q8" id="q8_4" value="4">
+                                <label for="q8_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q8" id="q8_5" value="5">
+                                <label for="q8_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kapitel 3: Fürsorge & Harmonie -->
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 9: Mir ist wichtig, dass es meinen Mitmenschen gut geht, und ich helfe gern
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q9" id="q9_1" value="1" required>
+                                <label for="q9_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q9" id="q9_2" value="2">
+                                <label for="q9_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q9" id="q9_3" value="3">
+                                <label for="q9_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q9" id="q9_4" value="4">
+                                <label for="q9_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q9" id="q9_5" value="5">
+                                <label for="q9_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 10: Ich suche Harmonie und Balance in Beziehungen und Umfeldern
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q10" id="q10_1" value="1" required>
+                                <label for="q10_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q10" id="q10_2" value="2">
+                                <label for="q10_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q10" id="q10_3" value="3">
+                                <label for="q10_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q10" id="q10_4" value="4">
+                                <label for="q10_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q10" id="q10_5" value="5">
+                                <label for="q10_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 11: Ich kann mich leicht in andere hineinversetzen und ihre Bedürfnisse erkennen
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q11" id="q11_1" value="1" required>
+                                <label for="q11_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q11" id="q11_2" value="2">
+                                <label for="q11_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q11" id="q11_3" value="3">
+                                <label for="q11_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q11" id="q11_4" value="4">
+                                <label for="q11_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q11" id="q11_5" value="5">
+                                <label for="q11_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 12: Ich ziehe Kraft aus Natur, Ruhe und regenerativen Tätigkeiten
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q12" id="q12_1" value="1" required>
+                                <label for="q12_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q12" id="q12_2" value="2">
+                                <label for="q12_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q12" id="q12_3" value="3">
+                                <label for="q12_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q12" id="q12_4" value="4">
+                                <label for="q12_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q12" id="q12_5" value="5">
+                                <label for="q12_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kapitel 4: Weisheit & Klarheit -->
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 13: Ich reflektiere gern über komplexe Fragen und suche nach tieferem Sinn
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q13" id="q13_1" value="1" required>
+                                <label for="q13_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q13" id="q13_2" value="2">
+                                <label for="q13_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q13" id="q13_3" value="3">
+                                <label for="q13_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q13" id="q13_4" value="4">
+                                <label for="q13_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q13" id="q13_5" value="5">
+                                <label for="q13_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 14: Ich beobachte Situationen analytisch und erkenne Muster
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q14" id="q14_1" value="1" required>
+                                <label for="q14_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q14" id="q14_2" value="2">
+                                <label for="q14_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q14" id="q14_3" value="3">
+                                <label for="q14_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q14" id="q14_4" value="4">
+                                <label for="q14_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q14" id="q14_5" value="5">
+                                <label for="q14_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 15: Ich vermittle gern Wissen und bringe Klarheit in schwierige Zusammenhänge
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q15" id="q15_1" value="1" required>
+                                <label for="q15_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q15" id="q15_2" value="2">
+                                <label for="q15_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q15" id="q15_3" value="3">
+                                <label for="q15_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q15" id="q15_4" value="4">
+                                <label for="q15_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q15" id="q15_5" value="5">
+                                <label for="q15_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label class="question-label">
+                            Frage 16: Ich bleibe ruhig und besonnen, wenn andere emotional reagieren
+                        </label>
+                        <div class="rating-labels">
+                            <span class="rating-label-text">Trifft gar nicht zu</span>
+                            <span class="rating-label-text">Trifft absolut zu</span>
+                        </div>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="q16" id="q16_1" value="1" required>
+                                <label for="q16_1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q16" id="q16_2" value="2">
+                                <label for="q16_2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q16" id="q16_3" value="3">
+                                <label for="q16_3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q16" id="q16_4" value="4">
+                                <label for="q16_4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="q16" id="q16_5" value="5">
+                                <label for="q16_5">5</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="contact-section">
+                        <h3>Ihre Kontaktdaten</h3>
+
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                            <span class="error-message" id="nameError">Bitte geben Sie Ihren Namen ein</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-Mail *</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error-message" id="emailError">Bitte geben Sie eine gültige E-Mail-Adresse ein</span>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="submitButton">
+                            Ergebnisse absenden
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h2>Vielen Dank!</h2>
+                <p>Ihre Antworten wurden erfolgreich übermittelt. Wir melden uns in Kürze bei Ihnen.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const WEBHOOK_URL = 'YOUR_N8N_WEBHOOK_URL'; // Replace with your n8n webhook URL
+
+        // Start survey
+        function startSurvey() {
+            document.getElementById('introSection').style.display = 'none';
+            document.getElementById('surveySection').classList.add('active');
+            updateProgress();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const form = document.getElementById('surveyForm');
+            const totalQuestions = 16;
+            let answeredQuestions = 0;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const question = form.querySelector(`input[name="q${i}"]:checked`);
+                if (question) answeredQuestions++;
+            }
+
+            const progress = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Add event listeners to all radio buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(button => {
+                button.addEventListener('change', updateProgress);
+            });
+        });
+
+        // Form submission
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validate form
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!name) {
+                document.getElementById('nameError').classList.add('show');
+                document.getElementById('name').classList.add('error');
+                return;
+            }
+
+            if (!email || !validateEmail(email)) {
+                document.getElementById('emailError').classList.add('show');
+                document.getElementById('email').classList.add('error');
+                return;
+            }
+
+            // Collect all answers
+            const formData = {
+                name: name,
+                email: email,
+                timestamp: new Date().toISOString(),
+                answers: {}
+            };
+
+            for (let i = 1; i <= 16; i++) {
+                const answer = document.querySelector(`input[name="q${i}"]:checked`);
+                if (answer) {
+                    formData.answers[`frage${i}`] = parseInt(answer.value);
+                }
+            }
+
+            // Disable submit button
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Wird gesendet...';
+
+            // Send to webhook
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('surveySection').style.display = 'none';
+                    document.getElementById('successMessage').classList.add('show');
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Es gab einen Fehler beim Senden Ihrer Antworten. Bitte versuchen Sie es erneut.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Ergebnisse absenden';
+            }
+        });
+
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Remove error styling on input
+        document.getElementById('name').addEventListener('input', function() {
+            this.classList.remove('error');
+            document.getElementById('nameError').classList.remove('show');
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            this.classList.remove('error');
+            document.getElementById('emailError').classList.remove('show');
+        });
+    </script>
+</body>
+</html>
